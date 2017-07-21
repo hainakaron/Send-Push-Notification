@@ -1,3 +1,4 @@
+<?
 $deviceToken = '{insert device token here}';
 	
 $url = 'ssl://gateway.sandbox.push.apple.com:2195'; //use this for development
@@ -13,14 +14,15 @@ $fp = stream_socket_client (
 );
 
 if ( !$fp )
-	throw Exception ( "Failed to connect: $err $errstr" );
-if ( $logger ) $logger->Write ( 'Connected to APNS' );
+	exit( "Failed to connect: $err $errstr" );
+
+echo 'Connected to APNS';
 
 
 $body['aps'] = [
-	'alert' => $message,
-	'sound' => $sound,
-	'url' => $link
+	'alert' => '{ your message here }',
+	'sound' => '{ name of the custom notification sound }',
+	'url' => '{ link to be opened when the notification is clicked }'
 ];
 
 $payload = json_encode ( $body );
@@ -32,6 +34,5 @@ $result = fwrite ( $fp, $msg, strlen($msg) );
 fclose ( $fp );
 
 if ( !$result )
-	throw Exception ( 'Error writing to socket' );
-
-return True;
+	echo ( 'Error writing to socket' );
+?>
